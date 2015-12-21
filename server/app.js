@@ -1,10 +1,16 @@
-var express = require('express');
+
+var express = require("express");
 var app = express();
-var index = require('./routes/index');
+var path = require('path');
 
-app.use('/', index);
+app.set("port", process.env.PORT || 3000);
 
-var server = app.listen(3000, function(){
-    var port = server.address().port;
-    console.log('listening on port ', port);
+app.get("/*", function(req,res,next){
+    console.log("Here is the asset I needs: " , req.params);
+    var file = req.params[0] || "views/index.html";
+    res.sendFile(path.join(__dirname, "./public/", file))
+});
+
+app.listen(app.get("port"), function(req,res,next){
+    console.log("Listening on port: " + app.get("port"));
 });
