@@ -1,11 +1,12 @@
 var express = require('express');
 var router = express.Router();
+var path = require('path');
 
 
 router.get('/', function(req, res, next){
-    console.log('index router get' );
-    res.send("res from get home in index");
-    next();
+    var file = req.params[0] || 'views/index.html';
+    res.sendFile(path.join(__dirname, '../public', file));
+    //next();
 });
 
 module.exports = router;
